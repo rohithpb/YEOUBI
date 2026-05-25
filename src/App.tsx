@@ -29,14 +29,49 @@ import CartDrawer from "./components/CartDrawer";
 import CampaignVideoModal from "./components/CampaignVideoModal";
 import LookbookLightbox from "./components/LookbookLightbox";
 import SearchOverlay from "./components/SearchOverlay";
+import { ParticleTextEffect } from "./components/ui/particle-text-effect";
 
 import { Product, CartItem, LookbookItem } from "./types";
 import { PRODUCTS, LOOKBOOK_ITEMS, IMAGES, LIMITED_DROP_PRODUCT } from "./data";
 
 export default function App() {
+  // Intro decryption loading animation states
+  const [progress, setProgress] = useState(0);
+  const [showIntro, setShowIntro] = useState(true);
+  const [fadeIntro, setFadeIntro] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(interval);
+          return 100;
+        }
+        return prev + 1;
+      });
+    }, 13); // Accelerated loading time (~1.3s instead of 4.5s)
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleParticleAnimationFinished = () => {
+    setFadeIntro(true);
+    setTimeout(() => {
+      setShowIntro(false);
+    }, 700);
+  };
+
   // Shopping Cart state management
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [cartOpen, setCartOpen] = useState(false);
+
+  // Responsive design checker for canvas rendering sizes
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // Modal display overlays
   const [activeProduct, setActiveProduct] = useState<Product | null>(null);
@@ -177,6 +212,41 @@ export default function App() {
   return (
     <div id="yeoubi-app-landscape" className="min-h-screen bg-black text-white selection:bg-red-650 selection:text-white font-sans antialiased flex flex-col justify-between">
       
+      {/* 🚀 THE INTRO DECRYPTION CORE LOADING STAGE */}
+      {showIntro && (
+        <div 
+          id="intro-loader-screen"
+          className={`fixed inset-0 z-[100] bg-black flex flex-col justify-between p-6 md:p-12 transition-opacity duration-700 ease-in-out select-none ${
+            fadeIntro ? "opacity-0 pointer-events-none" : "opacity-100"
+          }`}
+        >
+          {/* Immersive background particle canvas */}
+          <ParticleTextEffect
+            words={["YEOUBI", "YEOUBI"]}
+            onAnimationFinished={handleParticleAnimationFinished}
+          />
+
+          {/* Top Header Grid Lines */}
+
+          {/* Bottom stats layout */}
+          <div className="w-full relative z-10 pointer-events-none pt-4 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center text-[8.5px] font-mono text-zinc-650 gap-2">
+            <div>© YEOUBI TOKYO CORE SS25 SERIES INDEX. ALL RIGHTS RESERVED.</div>
+            <div className="flex items-center space-x-2 text-zinc-500 font-bold">
+              <span>LAT: 35.6762° N</span>
+              <span>·</span>
+              <span>LON: 139.6503° E</span>
+              <span>·</span>
+              <button 
+                onClick={() => setFadeIntro(true)}
+                className="text-white hover:text-[#E8002D] border-b border-dashed border-white/40 hover:border-[#E8002D] cursor-pointer pointer-events-auto transition-colors"
+              >
+                SKIP INTRO →
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Primary Sticky White Navigation Component */}
       <Navbar
         cartCount={cartItems.reduce((acc, item) => acc + item.quantity, 0)}
@@ -186,59 +256,89 @@ export default function App() {
         onScrollToSection={handleScrollToSegment}
       />
 
-      {/* 🦸 HERO SECTION */}
+      {/* 📢 ENDLESS MARQUEE TICKER TAPE */}
+      <Marquee />
+
+      {/* 🦸 PHOTO-FREE ARTISTIC HERO SECTION */}
       <section 
         id="hero-section" 
-        className="w-full relative min-h-[90vh] md:min-h-screen bg-black flex flex-col md:flex-row border-b border-white/10 group/hero overflow-hidden"
+        className="w-full relative min-h-[95vh] md:min-h-screen bg-black flex flex-col justify-between border-b border-white/10 select-none overflow-hidden"
       >
-        {/* Massive overlapping backdrop artwork heading from raw design HTML */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full pointer-events-none select-none z-0 hidden sm:block">
-          <h1 className="text-[170px] md:text-[230px] lg:text-[270px] font-extrabold tracking-[-0.08em] leading-none text-center"
-              style={{ 
-                fontFamily: "'Arial Black', sans-serif", 
-                WebkitTextStroke: "1px rgba(255,255,255,0.11)", 
-                color: "transparent" 
-              }}>
-            YEOUBI
-          </h1>
+        {/* Grid Background Accents */}
+        <div className="absolute inset-0 grid grid-cols-4 pointer-events-none z-0 opacity-15">
+          <div className="border-r border-white/10 h-full"></div>
+          <div className="border-r border-white/10 h-full"></div>
+          <div className="border-r border-white/10 h-full"></div>
+          <div className="h-full"></div>
+        </div>
+        
+        <div className="absolute inset-y-0 left-0 right-0 grid grid-rows-3 pointer-events-none z-0 opacity-15">
+          <div className="border-b border-white/10 w-full"></div>
+          <div className="border-b border-white/10 w-full"></div>
+          <div className="w-full"></div>
         </div>
 
-        {/* Left Side: Editorial Banner text and CTA elements */}
-        <div className="w-full md:w-1/2 p-6 md:p-14 flex flex-col justify-between relative z-10 border-b md:border-b-0 md:border-r border-white/10">
-          
-          {/* Badge & Technical coordinates */}
-          <div className="space-y-4">
+        {/* Top Header Compartment with System Labels */}
+        <div className="w-full z-10 px-6 py-4 md:px-12 flex flex-col md:flex-row items-start md:items-center justify-between border-b border-white/5 bg-zinc-950/20 backdrop-blur-subtle gap-4">
+          <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
             <div id="new-drop-badge" className="inline-flex items-center bg-white text-black px-3 py-1.5 space-x-2 select-none border border-black shadow">
               <span className="text-[#E8002D] text-[10px] animate-pulse">●</span>
               <span className="text-[9px] font-bold tracking-tighter uppercase text-black">NEW DROP "RAW REFLECTIONS" 05.24.25</span>
             </div>
-            
-            <div className="hidden md:block text-[10px] font-mono text-zinc-500 tracking-[0.2em] uppercase font-bold">
+            <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-[0.2em] font-bold">
               SS25 TOKYO OUTPOST ARCHIVE
-            </div>
+            </span>
           </div>
+          <div className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest flex items-center space-x-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#E8002D] animate-ping"></span>
+            <span>PORT_ACCESS_3000 // CORE ACTIVE</span>
+          </div>
+        </div>
 
-          {/* Central heavy headers and CTA */}
-          <div className="my-8 md:my-0 space-y-6">
-            <div className="relative">
-              {/* Massive back typography overlapping layout */}
-              <h2 id="hero-display-label" className="font-sans font-black text-6xl sm:text-7xl md:text-8xl tracking-tighter leading-none mb-3 text-white uppercase select-none">
-                YEOUBI
-              </h2>
-              <p className="text-[11px] font-black uppercase tracking-wider leading-tight text-red-600 block">
-                RESPECT THE CULTURE.<br/>BUILT FROM EXPRESSION.
-              </p>
+        {/* Center Dynamic Typography & Particle Vapor Scene */}
+        <div className="flex-1 flex flex-col items-center justify-center p-6 md:p-12 relative z-10 min-h-[350px]">
+          <div className="w-full max-w-5xl flex flex-col items-center justify-center text-center">
+            {/* Elegant futuristic wireframe crossbars */}
+            <div className="flex items-center space-x-4 mb-2 text-[#E8002D] font-mono text-[9px] tracking-[0.3em] font-black">
+              <span>✛ CORE ARCHIVE SS25 ✛</span>
             </div>
+            
+            <h1 
+              id="hero-massive-title" 
+              className="text-[64px] sm:text-[100px] md:text-[140px] lg:text-[170px] font-black tracking-tighter leading-none uppercase select-none transition-all duration-700 ease-out text-white hover:text-zinc-200 cursor-default"
+              style={{
+                fontFamily: '"Arial Black", sans-serif',
+                letterSpacing: "-0.04em"
+              }}
+            >
+              YEOUBI
+            </h1>
 
-            <p className="font-sans text-xs text-zinc-400 max-w-md leading-relaxed">
-              Streetwear is not just a uniform; it is a movement. An aggressive, dark editorial aesthetic celebrating raw textures, heavyweight textiles, and brutalist structural designs. Crafted without compromise.
+            {/* Accent coordinate grids */}
+            <div className="w-full max-w-xs h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent my-4"></div>
+          </div>
+          
+          {/* Subtext Statement */}
+          <div className="text-center mt-2 max-w-lg">
+            <p className="font-sans text-[11px] font-black uppercase tracking-[0.3em] leading-tight text-[#E8002D] mb-3">
+              RESPECT THE CULTURE. BUILT FROM EXPRESSION.
             </p>
+            <p className="font-sans text-xs text-zinc-400 leading-relaxed font-light">
+              Streetwear is not just a canvas; it is an aggressive, dark editorial rebellion. Celebrating heavy-duty fabrics, structural symmetry, and minimalistic digital code. Built for the concrete vanguard.
+            </p>
+          </div>
+        </div>
 
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4">
+        {/* Footer Control Room: Action CTA Grid & System Coordinates */}
+        <div className="w-full z-10 px-6 py-6 md:px-12 border-t border-white/5 bg-zinc-950/40 backdrop-blur-md">
+          <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-6">
+            
+            {/* CTAs column */}
+            <div className="flex flex-col sm:flex-row gap-4">
               <button
                 id="btn-hero-cta"
                 onClick={() => handleScrollToSegment("featured-collection")}
-                className="px-8 py-4 bg-[#E8002D] hover:bg-white hover:text-black hover:border-white text-[10px] font-bold tracking-widest text-white flex items-center justify-center space-x-2 transition-all duration-300 uppercase cursor-pointer border border-[#E8002D]"
+                className="px-8 py-4 bg-[#E8002D] hover:bg-white hover:text-black hover:border-white text-[10px] font-extrabold tracking-widest text-white flex items-center justify-center space-x-2 transition-all duration-300 uppercase cursor-pointer border border-[#E8002D]"
               >
                 <span>EXPLORE COLLECTION</span>
                 <ArrowRight className="h-4 w-4" />
@@ -247,61 +347,44 @@ export default function App() {
               <button
                 id="btn-hero-play-campaign"
                 onClick={() => setCampaignOpen(true)}
-                className="px-6 py-4 border border-zinc-800 hover:border-white text-[10px] font-bold tracking-widest flex items-center justify-center space-x-2 transition-all duration-350 cursor-pointer bg-black/20 hover:bg-black/90 uppercase"
+                className="px-6 py-4 border border-zinc-800 hover:border-white text-[10px] font-bold tracking-widest flex items-center justify-center space-x-2 transition-all duration-350 cursor-pointer bg-black/50 hover:bg-black/90 text-white uppercase"
               >
                 <Play className="h-3 w-3 fill-white" />
-                <span>PLAY SS25 CAMPAIGN</span>
+                <span>PLAY SS25 TRANSMISSION</span>
               </button>
             </div>
-          </div>
 
-          {/* Corner metadata values */}
-          <div className="flex items-center justify-between pt-6 border-t border-zinc-950 font-mono text-[9px] text-zinc-500">
-            <div className="flex items-center space-x-1">
-              <span className="text-[#E8002D] font-bold">✛</span>
-              <span>STREETWEAR BEYOND FABRIC</span>
+            {/* Technical Data Columns */}
+            <div className="grid grid-cols-2 gap-x-8 text-left border-l border-white/10 pl-6 hidden lg:grid">
+              <div>
+                <div className="text-[8px] font-mono text-zinc-550 tracking-wider">LATITUDE</div>
+                <div className="text-[10px] font-mono text-white font-bold">35.6762° N (TOKYO)</div>
+              </div>
+              <div>
+                <div className="text-[8px] font-mono text-zinc-550 tracking-wider">LONGITUDE</div>
+                <div className="text-[10px] font-mono text-white font-bold">139.6503° E (OUTPOST)</div>
+              </div>
             </div>
-            <button
-              id="lbl-hero-bottom-scroll"
-              onClick={() => handleScrollToSegment("featured-collection")}
-              className="hover:text-white transition-colors uppercase font-bold flex items-center space-x-1 cursor-pointer"
-            >
-              <span>SCROLL DOWN</span>
-              <ArrowDown className="h-3 w-3 animate-bounce text-[#E8002D]" />
-            </button>
+
+            {/* Corner alignment marker */}
+            <div className="flex items-center justify-between md:justify-end gap-6 font-mono text-[9px] text-zinc-500">
+              <div className="flex items-center space-x-1 font-bold">
+                <span className="text-[#E8002D]">✛</span>
+                <span>STREETWEAR BEYOND FABRIC</span>
+              </div>
+              <button
+                id="lbl-hero-bottom-scroll"
+                onClick={() => handleScrollToSegment("featured-collection")}
+                className="hover:text-white transition-colors uppercase font-bold flex items-center space-x-1 cursor-pointer"
+              >
+                <span>SCROLL DOWN</span>
+                <ArrowDown className="h-3 w-3 animate-bounce text-[#E8002D]" />
+              </button>
+            </div>
+
           </div>
-
-        </div>
-
-        {/* Right Side: Portrait high-contrast visual display */}
-        <div className="w-full md:w-1/2 min-h-[40vh] md:min-h-0 bg-neutral-900 relative flex items-center justify-center overflow-hidden border-t sm:border-t-0 select-none">
-          
-          {/* Pure grayscale high quality editorial with grayscale hover effect matching theme */}
-          <img
-            src={IMAGES.hero}
-            alt="YEOUBI SS25 Editorial Silhouette"
-            className="w-full h-full object-cover grayscale brightness-75 transition-all duration-1000 hover:scale-105 hover:brightness-100"
-            referrerPolicy="no-referrer"
-          />
-
-          {/* Graphic Overlay labels */}
-          <div className="absolute top-6 right-6 font-sans font-extrabold text-[#E8002D] text-2xl tracking-widest bg-black/80 px-4 py-2 border border-white/10 uppercase">
-            SS25
-          </div>
-
-          <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between text-[10px] font-mono tracking-widest bg-black/95 px-4 py-3 border border-white/10 text-white leading-none">
-            <span className="flex items-center space-x-2">
-              <span className="h-2 w-2 bg-[#E8002D] rounded-full animate-pulse"></span>
-              <span>LENS: COMPASS_MONOCHROM</span>
-            </span>
-            <span className="text-[#E8002D] font-bold uppercase">COLLECTION NO.01 +</span>
-          </div>
-
         </div>
       </section>
-
-      {/* 📢 ENDLESS MARQUEE TICKER TAPE */}
-      <Marquee />
 
       {/* 👕 FEATURED COLLECTION SECTOR (Product Cards Showcase) */}
       <section id="featured-collection" className="w-full bg-white text-black py-16 px-6 md:px-12 border-b border-black">
@@ -333,7 +416,8 @@ export default function App() {
               <div
                 id={`product-card-${product.id}`}
                 key={product.id}
-                className="group relative flex flex-col bg-zinc-50 border border-zinc-200 hover:border-black transition-all duration-300 shadow-sm overflow-hidden select-none"
+                onClick={() => setActiveProduct(product)}
+                className="group relative flex flex-col bg-zinc-50 border border-zinc-200 hover:border-black transition-all duration-300 shadow-sm overflow-hidden select-none cursor-pointer"
               >
                 {/* Image panel */}
                 <div className="relative aspect-[3/4] bg-zinc-100 overflow-hidden border-b border-zinc-100">
@@ -345,22 +429,38 @@ export default function App() {
                   <img
                     src={product.image}
                     alt={product.name}
-                    className="w-full h-full object-cover grayscale transition-transform duration-500 group-hover:scale-105"
+                    className="w-full h-full object-cover grayscale transition-transform duration-700 ease-out group-hover:scale-108 group-hover:grayscale-0"
                     referrerPolicy="no-referrer"
                   />
                   
-                  {/* Subtle technical overlay */}
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
-                    <span className="font-mono text-[8px] text-zinc-400 tracking-widest leading-none block mb-1">DESIGN SPEC:</span>
+                  {/* Subtle technical overlay with Add to Cart and Quick view buttons */}
+                  <div className="absolute inset-0 bg-black/45 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                    <span className="font-mono text-[8px] text-zinc-350 tracking-widest leading-none block mb-1">DESIGN SPEC:</span>
                     <p className="font-sans text-[10px] text-white leading-relaxed line-clamp-3 mb-4 font-light">
                       {product.description}
                     </p>
+                    
+                    {/* Add to Cart overlay button */}
+                    <button
+                      id={`btn-card-add-to-cart-${product.id}`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleAddToCart(product, "M", 1);
+                      }}
+                      className="w-full py-2.5 bg-[#E8002D] hover:bg-white hover:text-black text-white font-sans text-[10px] font-black tracking-[0.2em] transition-all uppercase cursor-pointer mb-2 border border-[#E8002D]"
+                    >
+                      ADD TO BAG
+                    </button>
+
                     <button
                       id={`btn-card-quick-${product.id}`}
-                      onClick={() => setActiveProduct(product)}
-                      className="w-full py-2 bg-white hover:bg-red-600 hover:text-white text-black font-sans text-[10px] font-bold tracking-[0.2em] transition-all uppercase cursor-pointer"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setActiveProduct(product);
+                      }}
+                      className="w-full py-1.5 bg-black/70 hover:bg-black text-white border border-white/20 hover:border-white font-sans text-[9px] font-bold tracking-[0.15em] transition-all uppercase cursor-pointer"
                     >
-                      QUICK SPEC VIEW →
+                      QUICK SPEC VIEW
                     </button>
                   </div>
                 </div>
@@ -388,7 +488,10 @@ export default function App() {
                     </span>
                     <button
                       id={`btn-card-explore-${product.id}`}
-                      onClick={() => setActiveProduct(product)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setActiveProduct(product);
+                      }}
                       className="text-zinc-600 hover:text-red-650 transition-colors cursor-pointer text-xs flex items-center space-x-1"
                     >
                       <span className="font-mono text-[9px] font-bold tracking-widest">EXPLORE</span>
