@@ -187,20 +187,11 @@ export function ParticleTextEffect({
     offscreenCtx.fillRect(0, 0, offscreenCanvas.width, offscreenCanvas.height)
 
     // Dynamic responsive font size
-    const baseSize = Math.min(canvas.width * 0.16, canvas.height * 0.28)
-    const fontHeight = index === 0 ? baseSize * 1.15 : baseSize
+    const fontHeight = Math.min(canvas.width * 0.16, canvas.height * 0.28)
 
-    // Draw text with appropriate styling based on the active word index
+    // Draw text with uniform clean styling
     offscreenCtx.fillStyle = "white"
-    
-    if (index === 0) {
-      // First Word: "YEOUBI" in "Need for Speed Most Wanted" theme / style
-      // Bold italic condensed aggressive styling
-      offscreenCtx.font = `italic 900 ${fontHeight}px 'Impact', 'Arial Black', sans-serif`
-    } else {
-      // Second Word: "YEOUBI" in normal clean text
-      offscreenCtx.font = `normal 600 ${fontHeight}px 'Inter', 'Helvetica Neue', sans-serif`
-    }
+    offscreenCtx.font = `normal 900 ${fontHeight}px "Arial Black", sans-serif`
 
     offscreenCtx.textAlign = "center"
     offscreenCtx.textBaseline = "middle"
@@ -334,13 +325,9 @@ export function ParticleTextEffect({
 
     // Advance words - slow transition pace 
     frameCountRef.current++
-    if (frameCountRef.current === 145) { // Slow, beautiful single cycle word transition
-      wordIndexRef.current = 1
-      nextWord(words[1], 1, canvas)
-    }
 
     // Stop and call callback once finalized or hold the normal text state
-    if (frameCountRef.current === 275 && onAnimationFinished) {
+    if (frameCountRef.current === 160 && onAnimationFinished) {
       onAnimationFinished()
     }
 

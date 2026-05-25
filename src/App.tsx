@@ -24,6 +24,7 @@ import {
 
 import Navbar from "./components/Navbar";
 import Marquee from "./components/Marquee";
+import { motion, useScroll, useTransform } from "motion/react";
 import ProductQuickView from "./components/ProductQuickView";
 import CartDrawer from "./components/CartDrawer";
 import CampaignVideoModal from "./components/CampaignVideoModal";
@@ -35,6 +36,10 @@ import { Product, CartItem, LookbookItem } from "./types";
 import { PRODUCTS, LOOKBOOK_ITEMS, IMAGES, LIMITED_DROP_PRODUCT } from "./data";
 
 export default function App() {
+  const { scrollY } = useScroll();
+  // As the user scrolls down from 0 to 800px, zoom in the title from 1x to 2.5x scale
+  const titleScale = useTransform(scrollY, [0, 800], [1, 2.5]);
+
   // Intro decryption loading animation states
   const [progress, setProgress] = useState(0);
   const [showIntro, setShowIntro] = useState(true);
@@ -303,16 +308,17 @@ export default function App() {
               <span>✛ CORE ARCHIVE SS25 ✛</span>
             </div>
             
-            <h1 
+            <motion.h1 
               id="hero-massive-title" 
-              className="text-[64px] sm:text-[100px] md:text-[140px] lg:text-[170px] font-black tracking-tighter leading-none uppercase select-none transition-all duration-700 ease-out text-white hover:text-zinc-200 cursor-default"
+              className="text-[64px] sm:text-[100px] md:text-[140px] lg:text-[170px] font-black tracking-tighter leading-none uppercase select-none transition-all duration-700 ease-out text-white hover:text-zinc-200 cursor-default origin-center"
               style={{
+                scale: titleScale,
                 fontFamily: '"Arial Black", sans-serif',
                 letterSpacing: "-0.04em"
               }}
             >
               YEOUBI
-            </h1>
+            </motion.h1>
 
             {/* Accent coordinate grids */}
             <div className="w-full max-w-xs h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent my-4"></div>
@@ -396,9 +402,16 @@ export default function App() {
               <span className="font-sans text-[10px] font-black tracking-widest text-[#E8002D] block uppercase mb-1.5">
                 01 · CURRENT DECK DROPS
               </span>
-              <h2 id="collection-headline" className="font-sans font-black text-4xl sm:text-5xl md:text-6xl tracking-tighter uppercase text-black leading-none">
+              <motion.h2 
+                id="collection-headline" 
+                initial={{ x: -100, opacity: 0 }}
+                whileInView={{ x: 0, opacity: 1 }}
+                viewport={{ once: false, amount: 0.3 }}
+                transition={{ type: "spring", stiffness: 70, damping: 14 }}
+                className="font-sans font-black text-4xl sm:text-5xl md:text-6xl tracking-tighter uppercase text-black leading-none"
+              >
                 RAW REFLECTIONS
-              </h2>
+              </motion.h2>
             </div>
             <div className="mt-4 sm:mt-0 max-w-xs text-right font-mono text-[9px] text-zinc-550 space-y-1">
               <div>BATCH SEQUENCE: AP-RAW-SS25</div>
@@ -684,6 +697,103 @@ export default function App() {
 
       </section>
 
+      {/* ⚡ YOUBI KINETIC CULTURE STATEMENT */}
+      <section className="w-full bg-black text-white py-16 px-6 md:px-12 border-b border-white/10 overflow-hidden relative">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,rgba(232,0,45,0.08),transparent_70%)] pointer-events-none"></div>
+        <div className="mx-auto max-w-7xl relative">
+          
+          {/* Subtle grid line decoration */}
+          <div className="absolute -top-16 left-1/4 w-[1px] h-full bg-white/5 hidden md:block" />
+          <div className="absolute -top-16 left-3/4 w-[1px] h-full bg-white/5 hidden md:block" />
+
+          {/* Heading meta-info */}
+          <div className="flex items-center space-x-3 mb-8">
+            <span className="h-1.5 w-1.5 bg-[#E8002D] rounded-full animate-pulse" />
+            <span className="font-mono text-[9px] tracking-[0.3em] text-zinc-500 uppercase font-black">
+              STATEMENT SYSTEM // EXP_2025
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            
+            {/* Visual Red Line Accent */}
+            <div className="hidden lg:block lg:col-span-1">
+              <div className="w-[1px] h-32 bg-gradient-to-b from-[#E8002D] to-transparent mx-auto" />
+            </div>
+
+            {/* Main Statement Text */}
+            <div className="lg:col-span-11 space-y-6">
+              
+              <div className="overflow-hidden">
+                <motion.div
+                  initial={{ y: "100%", opacity: 0 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  viewport={{ once: false, amount: 0.3 }}
+                  transition={{ type: "spring", stiffness: 60, damping: 15 }}
+                  className="font-sans text-[11px] font-black tracking-widest text-[#E8002D] uppercase"
+                >
+                  YOUBI // CULTURAL BLUEPRINT
+                </motion.div>
+              </div>
+
+              {/* Core animated slogan split by kinetic slide-ins */}
+              <div className="space-y-2">
+                <div className="overflow-hidden">
+                  <motion.h3 
+                    initial={{ x: -150, opacity: 0 }}
+                    whileInView={{ x: 0, opacity: 1 }}
+                    viewport={{ once: false, amount: 0.3 }}
+                    transition={{ type: "spring", stiffness: 50, damping: 12, delay: 0.1 }}
+                    className="font-sans font-black text-3xl sm:text-4xl md:text-5xl lg:text-7xl tracking-tighter uppercase leading-none text-white"
+                    style={{ fontFamily: '"Arial Black", sans-serif' }}
+                  >
+                    YOUBI 2025
+                  </motion.h3>
+                </div>
+
+                <div className="overflow-hidden">
+                  <motion.h3 
+                    initial={{ x: 150, opacity: 0 }}
+                    whileInView={{ x: 0, opacity: 1 }}
+                    viewport={{ once: false, amount: 0.3 }}
+                    transition={{ type: "spring", stiffness: 50, damping: 12, delay: 0.2 }}
+                    className="font-sans font-black text-3xl sm:text-4xl md:text-5xl lg:text-7xl tracking-tighter uppercase leading-none text-[#E8002D]"
+                    style={{ fontFamily: '"Arial Black", sans-serif' }}
+                  >
+                    RESPECT THE CULTURE
+                  </motion.h3>
+                </div>
+
+                <div className="overflow-hidden">
+                  <motion.h3 
+                    initial={{ y: 100, opacity: 0 }}
+                    whileInView={{ y: 0, opacity: 1 }}
+                    viewport={{ once: false, amount: 0.3 }}
+                    transition={{ type: "spring", stiffness: 50, damping: 12, delay: 0.3 }}
+                    className="font-sans font-black text-3xl sm:text-4xl md:text-5xl lg:text-7xl tracking-tighter uppercase leading-none text-zinc-300"
+                    style={{ fontFamily: '"Arial Black", sans-serif' }}
+                  >
+                    BUILT FROM EXPRESSION.
+                  </motion.h3>
+                </div>
+              </div>
+
+              {/* Running ticker layout / bottom accents */}
+              <div className="pt-6 border-t border-white/5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-[9px] font-mono text-zinc-500">
+                <div>SYSTEM CHECK: STABLE // EXP_CHANNELS ACTIVE</div>
+                <div className="flex items-center space-x-1.5">
+                  <span className="text-[#E8002D]">✛</span>
+                  <span>WE EMPOWER THE RAW MOVEMENT © 2025</span>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
       {/* 📸 LOOKBOOK VIEWPORT GALLERY */}
       <section id="lookbook-section" className="w-full bg-white text-black py-16 px-6 md:px-12 border-b border-black">
         <div className="mx-auto max-w-7xl">
@@ -693,9 +803,16 @@ export default function App() {
               <span className="font-sans text-[10px] font-black tracking-widest text-[#E8002D] block uppercase mb-1.5">
                 02 · EDITORIAL ARCHIVES
               </span>
-              <h2 id="lookbook-headline" className="font-sans font-black text-3xl sm:text-4xl md:text-5xl tracking-tighter uppercase text-black leading-none">
+              <motion.h2 
+                id="lookbook-headline" 
+                initial={{ x: -100, opacity: 0 }}
+                whileInView={{ x: 0, opacity: 1 }}
+                viewport={{ once: false, amount: 0.3 }}
+                transition={{ type: "spring", stiffness: 70, damping: 14 }}
+                className="font-sans font-black text-3xl sm:text-4xl md:text-5xl tracking-tighter uppercase text-black leading-none"
+              >
                 Spring / Summer 2025 "Raw Reflections"
-              </h2>
+              </motion.h2>
             </div>
             <div className="mt-4 sm:mt-0 font-mono text-[9px] text-zinc-550 leading-none">
               PHOTOGRAPHY: TOKYO CONCRETE SESSIONS
