@@ -14,13 +14,13 @@ import productGravity from "./assets/images/product_gravity_1779716192607.png";
 import limitedBag from "./assets/images/limited_bag_1779716157361.png";
 
 export const IMAGES = {
-  hero: heroStreetwear,
-  productRaw,
-  productDark,
-  productChaos,
-  productGravity,
-  limitedBag,
-  culture: "https://images.unsplash.com/photo-1516257984-b1b4d707412e?auto=format&fit=crop&w=1200&q=80&sat=-100"
+  hero: "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=1200&q=80&sat=-100",
+  productRaw: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=800&q=80&sat=-100",
+  productDark: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=800&q=80&sat=-100",
+  productChaos: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=800&q=80&sat=-100",
+  productGravity: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80&sat=-100",
+  limitedBag: "https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?auto=format&fit=crop&w=800&q=80&sat=-100",
+  culture: "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=1200&q=80&sat=-100"
 };
 
 export const PRODUCTS: Product[] = [
@@ -29,7 +29,7 @@ export const PRODUCTS: Product[] = [
     name: "RAW REFLECTIONS HOODIE",
     price: 185,
     season: "SS25",
-    image: productRaw,
+    image: IMAGES.productRaw,
     badge: "NEW",
     description: "Heavyweight 480GSM French Terry cotton pullover featuring experimental outer raw edge design, dynamic double-panel protective hood, and distressed industrial wash. Signature oversized streetwear cut.",
     specs: [
@@ -45,7 +45,7 @@ export const PRODUCTS: Product[] = [
     name: "DARK MATTER FLIGHT CARGOS",
     price: 210,
     season: "SS25",
-    image: productDark,
+    image: IMAGES.productDark,
     description: "Technical dynamic utility flight cargos built with adjustable modular straps, military-grade tactical steel hardware zippers, and reinforced ergonomic double-knee grids. Finished in premium waterproof ripstop.",
     specs: [
       "High-grade Ripstop Nylon-Cotton Blend",
@@ -60,7 +60,7 @@ export const PRODUCTS: Product[] = [
     name: "CHAOS THEORY KNIT SWEATER",
     price: 165,
     season: "FW24",
-    image: productChaos,
+    image: IMAGES.productChaos,
     description: "Premium intarsia knit sweater showcasing custom technical chaos motifs. Features hand-worked destructed raw distressing at collar bone, cuffs, and hem waistline for an authentic aggressive look.",
     specs: [
       "80% Extra Fine Merino Wool, 20% Nylon",
@@ -75,7 +75,7 @@ export const PRODUCTS: Product[] = [
     name: "ZERO GRAVITY HIGH-DENSITY TEE",
     price: 85,
     season: "FW24",
-    image: productGravity,
+    image: IMAGES.productGravity,
     description: "Heavyweight urban basic built from carded cotton fibers. Includes high-density silicon abstract graphic prints layered on front collar and rear back. Designed with thick rib finish collar.",
     specs: [
       "300GSM Solid Ring-Spun Cotton",
@@ -92,7 +92,7 @@ export const LIMITED_DROP_PRODUCT: Product = {
   name: "YEOUBI METALLIC UTILITY POUCH",
   price: 145,
   season: "SS25 DROP",
-  image: limitedBag,
+  image: IMAGES.limitedBag,
   badge: "LIMITED",
   description: "Exclusive collector-grade modular utility sling pouch. Engineered from hyper-reflective metallic chrome technical canvas, with aerospace-grade anodized aluminum fasteners, structural dynamic paracord adjustments, and laser-carved YEOUBI serial numbers.",
   specs: [
@@ -107,25 +107,25 @@ export const LIMITED_DROP_PRODUCT: Product = {
 export const LOOKBOOK_ITEMS: LookbookItem[] = [
   {
     id: "look-1",
-    url: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80&sat=-100",
+    url: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=800&q=80&sat=-100",
     location: "Concrete Viaduct, Tokyo District",
     outfit: "RAW REFLECTIONS HOODIE + CORE SLING BAG"
   },
   {
     id: "look-2",
-    url: "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=800&q=80&sat=-100",
+    url: "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=800&q=80&sat=-100",
     location: "Underpass Block, Shinjuku District",
     outfit: "RAW SEAM WIND JACKET + FLIGHT CARGOS"
   },
   {
     id: "look-3",
-    url: "https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&w=800&q=80&sat=-100",
+    url: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=800&q=80&sat=-100",
     location: "Loading Dock 04, Berlin Outskirts",
     outfit: "CHAOS THEORY KNIT + DISTRESSED DENIM"
   },
   {
     id: "look-4",
-    url: "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=800&q=80&sat=-100",
+    url: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=800&q=80&sat=-100",
     location: "Abandoned Brutalist Plaza, Warsaw",
     outfit: "ZERO GRAVITY TEE + REFLECTIVE SHIELD GLASS"
   }
