@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@200;300;400;500;600;700;800&family=Share+Tech+Mono&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Anton", sans-serif;
+  --font-digital: "Share Tech Mono", monospace;
+  --font-serif: "Playfair Display", serif;
+  --color-red-500: #E8002D;
+  --color-red-600: #E8002D;
+  --color-red-650: #E8002D;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: marquee 30s linear infinite;
+}
+
+/* Custom scrollbar to keep structural borders pristine */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+::-webkit-scrollbar-thumb {
+  background: #E8002D;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ffffff;
+}
+
+/* Base style resets */
+body {
+  background-color: #000000;
+  color: #ffffff;
+  overflow-x: hidden;
+}

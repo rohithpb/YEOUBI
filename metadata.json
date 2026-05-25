@@ -1,0 +1,6 @@
+{
+  "name": "YEOUBI Streetwear",
+  "description": "An editorial streetwear fashion brand homepage recreating the high-contrast aesthetic of YEOUBI, featuring high-fashion grids, interactive shopping, countdown drops, and motion animations.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
