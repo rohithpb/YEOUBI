@@ -697,7 +697,7 @@ export default function App() {
 
       </section>
 
-      {/* ⚡ YOUBI KINETIC CULTURE STATEMENT */}
+      {/* ⚡ YEOUBI KINETIC CULTURE STATEMENT */}
       <section className="w-full bg-black text-white py-16 px-6 md:px-12 border-b border-white/10 overflow-hidden relative">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,rgba(232,0,45,0.08),transparent_70%)] pointer-events-none"></div>
         <div className="mx-auto max-w-7xl relative">
@@ -732,7 +732,7 @@ export default function App() {
                   transition={{ type: "spring", stiffness: 60, damping: 15 }}
                   className="font-sans text-[11px] font-black tracking-widest text-[#E8002D] uppercase"
                 >
-                  YOUBI // CULTURAL BLUEPRINT
+                  YEOUBI // CULTURAL BLUEPRINT
                 </motion.div>
               </div>
 
@@ -747,7 +747,7 @@ export default function App() {
                     className="font-sans font-black text-3xl sm:text-4xl md:text-5xl lg:text-7xl tracking-tighter uppercase leading-none text-white"
                     style={{ fontFamily: '"Arial Black", sans-serif' }}
                   >
-                    YOUBI 2025
+                    YEOUBI 2025
                   </motion.h3>
                 </div>
 
